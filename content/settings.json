@@ -20,6 +20,10 @@
       "zh": "新北市新店區北新路一段40號2樓",
       "en": "2F, No. 40, Sec. 1, Beixin Rd., Xindian Dist., New Taipei City, Taiwan"
     },
+    "hours": {
+      "zh": "09:30-17:00",
+      "en": "09:30-17:00"
+    },
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E5%8C%97%E5%B8%82%E6%96%B0%E5%BA%97%E5%8D%80%E5%8C%97%E6%96%B0%E8%B7%AF%E4%B8%80%E6%AE%B540%E8%99%9F"
   },
   "booking": {

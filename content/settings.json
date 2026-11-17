@@ -1,14 +1,14 @@
 {
   "brand": {
     "name": {
-      "zh": "清泰源實業股份有限公司 ",
-      "en": "GETX MICROBIOTECH"
+      "zh": "清泰源",
+      "en": "GETX"
     },
     "fullName": {
       "zh": "清泰源實業股份有限公司",
       "en": "GETX MICROBIOTECH CO., LTD."
     },
-    "logoImage": "/images/logo1-benzene.png",
+    "logoImage": "",
     "logoLetter": "清",
     "color": "#0f766e",
     "colorDark": "#115e59"
@@ -22,12 +22,13 @@
       "en": "2F, No. 40, Sec. 1, Beixin Rd., Xindian Dist., New Taipei City, Taiwan"
     },
     "hours": {
-      "zh": "09:30-17:00",
-      "en": "09:30-17:00"
+      "zh": "",
+      "en": ""
     },
     "mapUrl": "https://www.google.com/maps/search/?api=1&query=%E6%96%B0%E5%8C%97%E5%B8%82%E6%96%B0%E5%BA%97%E5%8D%80%E5%8C%97%E6%96%B0%E8%B7%AF%E4%B8%80%E6%AE%B540%E8%99%9F"
   },
   "booking": {
+    "endpoint": "",
     "slots": [
       "09:30",
       "11:00",

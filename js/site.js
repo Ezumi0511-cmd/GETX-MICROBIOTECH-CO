@@ -59,6 +59,16 @@
       mark.textContent = S.brand.logoLetter;
     }
 
+    // 各區塊圖片（後台清空圖片欄位時自動隱藏）
+    var hero = $("top");
+    hero.classList.toggle("has-img", !!S.hero.image);
+    // 轉成完整網址：CSS 變數裡的相對路徑會以 css/ 資料夾為基準，導致找不到圖
+    hero.style.setProperty("--hero-img", S.hero.image ? 'url("' + new URL(src(S.hero.image), document.baseURI).href + '")' : "none");
+    setImg($("aboutImg"), S.about.image, t(S.about.title));
+    setImg($("storyImg"), S.story.image, t(S.story.title));
+    setImg($("servicesImg"), S.services.image, t(S.services.title));
+    setImg($("bookingImg"), S.bookingSection.image, "");
+
     // 首頁數據
     fill($("stats"), A(S.hero.stats).map(function (s) {
       var d = el("div");
@@ -112,6 +122,14 @@
     // 服務流程
     fill($("stepList"), A(S.process.steps).map(function (s) {
       var li = el("li");
+      if (s.image) {
+        var img = el("img", "step-img");
+        img.src = src(s.image);
+        img.alt = t(s.name);
+        img.loading = "lazy";
+        li.append(img);
+        li.classList.add("has-img");
+      }
       li.append(el("h3", null, t(s.name)), el("p", null, t(s.desc)));
       return li;
     }));
@@ -130,6 +148,14 @@
 
     $("copyright").textContent =
       "© " + new Date().getFullYear() + " " + t(S.brand.fullName) + " " + t(S.ui.labels.rights);
+  }
+
+  function setImg(img, path, alt) {
+    img.hidden = !path;
+    if (!path) { img.removeAttribute("src"); return; }
+    if (img.getAttribute("src") !== src(path)) img.src = src(path);
+    img.alt = alt || "";
+    img.loading = "lazy";
   }
 
   function showSection(id, visible) {

@@ -91,6 +91,23 @@ img { max-width: 100%; display: block; }
 .two-col { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: start; }
 .prose p { color: #333a45; }
 .two-col.single { grid-template-columns: 1fr; }
+
+/* ---------- Images ---------- */
+.hero.has-img {
+  background-image: linear-gradient(90deg, #f5f7fa 0%, rgba(245,247,250,.96) 38%, rgba(245,247,250,.55) 58%, rgba(245,247,250,0) 75%), var(--hero-img);
+  background-size: cover;
+  background-position: right center;
+  min-height: 640px;
+}
+.section-img, .banner-img, .contact-img { display: block; width: 100%; object-fit: cover; border-radius: var(--radius); }
+.section-img { aspect-ratio: 16 / 10; margin-bottom: 24px; }
+#storyImg { margin: 24px 0 0; }
+.banner-img { aspect-ratio: 32 / 9; margin-bottom: 32px; }
+.contact-img { aspect-ratio: 16 / 9; margin-bottom: 20px; }
+.steps li.has-img { padding: 0 0 24px; overflow: hidden; }
+.steps li.has-img::before, .steps li.has-img h3, .steps li.has-img p { padding: 0 24px; }
+.steps li.has-img::before { margin-top: 18px; }
+.step-img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
 [hidden] { display: none !important; }
 .industries { margin-top: 32px; }
 .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -203,6 +220,12 @@ details p { padding: 0 22px 18px; margin: 0; color: var(--muted); }
   .lang { align-self: flex-start; margin: 14px 0; }
   .nav .btn { text-align: center; }
   .hero { padding: 64px 0 48px; }
+  .hero.has-img {
+    min-height: 0;
+    background-image: linear-gradient(rgba(245,247,250,.9), rgba(245,247,250,.9)), var(--hero-img);
+    background-position: 70% center;
+  }
+  .banner-img { aspect-ratio: 16 / 7; }
   .section { padding: 56px 0; }
   .stats { gap: 28px; }
 }

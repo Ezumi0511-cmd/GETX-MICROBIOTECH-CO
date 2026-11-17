@@ -5,18 +5,22 @@
   },
   "steps": [
     {
+      "image": "/images/process-1-diagnosis.jpg",
       "name": { "zh": "污染診斷", "en": "Diagnose" },
       "desc": { "zh": "了解原料、製程、成品或作業環境的微生物污染狀況。", "en": "Assess microbial contamination in raw materials, process, products or work environment." }
     },
     {
+      "image": "/images/process-2-analysis.jpg",
       "name": { "zh": "分析化驗與鑑定", "en": "Test & identify" },
       "desc": { "zh": "進行異常分析化驗，鑑定造成問題的微生物。", "en": "Analyse abnormalities and identify the microbes responsible." }
     },
     {
+      "image": "/images/process-3-treatment.jpg",
       "name": { "zh": "改善對策與治療", "en": "Treat" },
       "desc": { "zh": "提出改善對策，選用合適的微生物控制藥劑。", "en": "Propose corrective measures and select the right control agents." }
     },
     {
+      "image": "/images/process-4-monitoring.jpg",
       "name": { "zh": "追蹤檢測", "en": "Monitor" },
       "desc": { "zh": "後續追蹤檢測並持續改善，達到有效控制。", "en": "Follow-up testing and continuous improvement for effective control." }
     }

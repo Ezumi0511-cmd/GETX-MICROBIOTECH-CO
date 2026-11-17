@@ -1,0 +1,100 @@
+{
+  "title": {
+    "zh": "產品介紹",
+    "en": "Products"
+  },
+  "lead": {
+    "zh": "引進美日技術，針對不同產業與製程條件開發的微生物控制藥劑。",
+    "en": "Microbial control agents developed with US and Japanese technology for different industries and process conditions."
+  },
+  "items": [
+    {
+      "name": { "zh": "殺菌劑（Slimicide）", "en": "Slimicide" },
+      "desc": {
+        "zh": "引進美日技術開發出各種污泥控制劑，具不同的配比、比重及溶解性，可對應各種抄造條件。具備強力殺菌作用，控制工程中的微生物菌泥，同時減少積垢，使抄造作業安定化。",
+        "en": "Slime control agents developed with US and Japanese technology, in different formulations, densities and solubilities to suit any papermaking condition. They control microbial slime in the system with strong biocidal action, reduce deposits and stabilise machine operation."
+      },
+      "audience": { "zh": "造紙抄造系統及各種工程用水系統", "en": "Papermaking systems and process water systems" },
+      "specs": [
+        { "zh": "高水溶解性／多段溶解型", "en": "Highly water-soluble / multi-stage dissolving" },
+        { "zh": "殺菌力強，專殺腐敗菌及硫酸還原菌", "en": "Strong action against spoilage and sulfate-reducing bacteria" },
+        { "zh": "單一殺菌成分／複合殺菌成分", "en": "Single or combined active ingredients" },
+        { "zh": "抗藥性低", "en": "Low resistance build-up" },
+        { "zh": "殺菌效用持續", "en": "Long-lasting effect" }
+      ]
+    },
+    {
+      "name": { "zh": "鹼性防腐劑", "en": "Alkaline preservative" },
+      "desc": {
+        "zh": "針對製品於製造流程中的物料防腐管理所開發，具備安全性、經濟性及穩定性；適用中性到強鹼性 pH 範圍。",
+        "en": "Developed for in-process preservation of materials — safe, economical and stable — for neutral to strongly alkaline pH."
+      },
+      "audience": { "zh": "製紙塗工液、澱粉及糊液、水性塗料、碳酸鈣等", "en": "Paper coating colours, starch and pastes, water-based paints, calcium carbonate" },
+      "specs": [
+        { "zh": "高水溶性", "en": "Highly water-soluble" },
+        { "zh": "適用中性到強鹼性 pH 範圍", "en": "Neutral to strongly alkaline pH" },
+        { "zh": "迅速地殺滅腐敗菌", "en": "Rapidly kills spoilage bacteria" },
+        { "zh": "殺菌效用持續", "en": "Long-lasting effect" }
+      ]
+    },
+    {
+      "name": { "zh": "酸性防腐劑", "en": "Acidic preservative" },
+      "desc": {
+        "zh": "複合成分，不會影響製品物性；適用酸性到弱鹼性 pH 範圍，迅速殺滅腐敗菌及厭氧菌。",
+        "en": "A combined formulation that does not affect product properties; for acidic to mildly alkaline pH, rapidly killing spoilage and anaerobic bacteria."
+      },
+      "audience": {
+        "zh": "纖維用油劑、澱粉糊及澱粉、油墨、高分子接著劑、壓克力樹脂、PU 樹脂、製紙用上膠劑、水性塗料及水泥漆、印花糊料、白膠、Silicon 製品、防水材、碳酸鈣",
+        "en": "Fibre oils, starch and starch pastes, inks, polymer adhesives, acrylic and PU resins, paper sizing agents, water-based and cement paints, printing pastes, white glue, silicone products, waterproofing materials, calcium carbonate"
+      },
+      "specs": [
+        { "zh": "不會影響製品物性", "en": "Does not affect product properties" },
+        { "zh": "複合成分", "en": "Combined active ingredients" },
+        { "zh": "適用酸性到弱鹼性 pH 範圍", "en": "Acidic to mildly alkaline pH" },
+        { "zh": "迅速地殺滅腐敗菌及厭氧菌", "en": "Rapidly kills spoilage and anaerobic bacteria" },
+        { "zh": "防腐力持續", "en": "Long-lasting preservation" }
+      ]
+    },
+    {
+      "name": { "zh": "殺菌型防腐劑", "en": "Biocidal preservative" },
+      "desc": {
+        "zh": "強力殺菌型防腐劑，複合成分、高水溶解性；適用酸性到弱鹼性 pH 範圍。",
+        "en": "A high-strength biocidal preservative with combined, highly water-soluble ingredients, for acidic to mildly alkaline pH."
+      },
+      "audience": { "zh": "製紙塗工液、澱粉及糊液、各種高分子接著劑等", "en": "Paper coating colours, starch and pastes, polymer adhesives" },
+      "specs": [
+        { "zh": "強力殺菌型", "en": "High-strength biocidal action" },
+        { "zh": "高水溶解性、複合成分", "en": "Highly water-soluble, combined ingredients" },
+        { "zh": "適用酸性到弱鹼性 pH 範圍", "en": "Acidic to mildly alkaline pH" },
+        { "zh": "迅速地殺滅腐敗菌及厭氧菌", "en": "Rapidly kills spoilage and anaerobic bacteria" },
+        { "zh": "防腐力持續", "en": "Long-lasting preservation" }
+      ]
+    },
+    {
+      "name": { "zh": "防黴劑（Fungicide）", "en": "Fungicide" },
+      "desc": {
+        "zh": "根據引進的美日技術，配合客戶的需求，開發出安全有效的防黴劑產品系列。",
+        "en": "A range of safe, effective fungicides developed with US and Japanese technology to meet each client's needs."
+      },
+      "audience": { "zh": "依客戶製品與需求配合開發", "en": "Developed to match each client's products and needs" },
+      "specs": [
+        { "zh": "引進美日技術", "en": "US and Japanese technology" },
+        { "zh": "安全有效", "en": "Safe and effective" },
+        { "zh": "配合客戶需求開發", "en": "Tailored to client requirements" }
+      ]
+    },
+    {
+      "name": { "zh": "殺菌型工程用洗淨劑（Cleansaide）", "en": "Biocidal process cleaner (Cleansaide)" },
+      "desc": {
+        "zh": "專用於清洗被微生物污染之工程系統內的沉積物，開發出不同效能的工程洗淨劑，使用上兼具物理性和化學性效果，可改善抄造作業系統。",
+        "en": "Process cleaners of varying strength for removing deposits from microbially contaminated systems. Combining physical and chemical action, they improve papermaking system operation."
+      },
+      "audience": { "zh": "受微生物污染的工程系統（如抄造系統）", "en": "Microbially contaminated process systems, such as papermaking lines" },
+      "specs": [
+        { "zh": "清除微生物污染沉積物", "en": "Removes microbial deposits" },
+        { "zh": "兼具物理性與化學性效果", "en": "Combined physical and chemical action" },
+        { "zh": "多種效能可選", "en": "Available in several strengths" }
+      ]
+    }
+  ]
+}

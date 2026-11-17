@@ -1,0 +1,144 @@
+{
+  "nav": {
+    "about": {
+      "zh": "公司簡介",
+      "en": "About"
+    },
+    "story": {
+      "zh": "控制技術",
+      "en": "Technology"
+    },
+    "services": {
+      "zh": "產品介紹",
+      "en": "Products"
+    },
+    "process": {
+      "zh": "服務流程",
+      "en": "Process"
+    },
+    "cases": {
+      "zh": "成功案例",
+      "en": "Case Studies"
+    },
+    "faq": {
+      "zh": "常見問題",
+      "en": "FAQ"
+    },
+    "book": {
+      "zh": "立即預約",
+      "en": "Book Now"
+    }
+  },
+  "labels": {
+    "audience": {
+      "zh": "適用範圍",
+      "en": "Applications"
+    },
+    "includes": {
+      "zh": "產品特色",
+      "en": "Key features"
+    },
+    "all": {
+      "zh": "全部",
+      "en": "All"
+    },
+    "client": {
+      "zh": "客戶",
+      "en": "Client"
+    },
+    "phone": {
+      "zh": "電話",
+      "en": "Phone"
+    },
+    "fax": {
+      "zh": "傳真",
+      "en": "Fax"
+    },
+    "email": {
+      "zh": "電子郵件",
+      "en": "Email"
+    },
+    "address": {
+      "zh": "地址",
+      "en": "Address"
+    },
+    "hours": {
+      "zh": "營業時間",
+      "en": "Hours"
+    },
+    "map": {
+      "zh": "在地圖上查看",
+      "en": "View on map"
+    },
+    "rights": {
+      "zh": "版權所有",
+      "en": "All rights reserved."
+    }
+  },
+  "form": {
+    "name": {
+      "zh": "姓名",
+      "en": "Name"
+    },
+    "company": {
+      "zh": "公司名稱（選填）",
+      "en": "Company (optional)"
+    },
+    "phone": {
+      "zh": "聯絡電話",
+      "en": "Phone"
+    },
+    "email": {
+      "zh": "電子郵件",
+      "en": "Email"
+    },
+    "service": {
+      "zh": "想了解的產品",
+      "en": "Product"
+    },
+    "date": {
+      "zh": "預約日期",
+      "en": "Date"
+    },
+    "time": {
+      "zh": "預約時段",
+      "en": "Time"
+    },
+    "notes": {
+      "zh": "需求說明（選填）",
+      "en": "Notes (optional)"
+    },
+    "choose": {
+      "zh": "請選擇",
+      "en": "Please select"
+    },
+    "submit": {
+      "zh": "送出預約",
+      "en": "Submit booking"
+    },
+    "sending": {
+      "zh": "送出中…",
+      "en": "Sending…"
+    },
+    "required": {
+      "zh": "請完整填寫必填欄位。",
+      "en": "Please complete all required fields."
+    },
+    "badEmail": {
+      "zh": "電子郵件格式不正確。",
+      "en": "Please enter a valid email address."
+    },
+    "okMail": {
+      "zh": "已為您開啟郵件軟體，請按下「傳送」完成預約。我們收到後會盡快與您確認時間。",
+      "en": "Your email app has been opened — press Send to complete the booking. We'll confirm your slot shortly."
+    },
+    "okSent": {
+      "zh": "預約已送出！我們會在一個工作天內與您確認時間。",
+      "en": "Booking received! We'll confirm your slot within one business day."
+    },
+    "fail": {
+      "zh": "送出失敗，請稍後再試，或直接來電／來信聯絡我們。",
+      "en": "Something went wrong. Please try again, or contact us by phone or email."
+    }
+  }
+}

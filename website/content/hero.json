@@ -1,0 +1,45 @@
+{
+  "eyebrow": {
+    "zh": "工業微生物污染控制與管理",
+    "en": "Industrial microbial contamination control"
+  },
+  "title": {
+    "zh": "解決微生物污染，\n守護您的製程與品質",
+    "en": "Solving microbial contamination,\nprotecting your process and quality"
+  },
+  "lead": {
+    "zh": "從原料進料管理、製程污染控制、成品防腐到環境管控，清泰源協助工廠解決微生物污染引起的疑難雜症，讓生產運作正常化、製品品質更穩定。",
+    "en": "From raw-material intake and in-process contamination control to finished-product preservation and environmental management, GETX helps factories solve problems caused by microbial contamination — keeping production running smoothly and product quality consistent."
+  },
+  "primary": {
+    "zh": "預約諮詢",
+    "en": "Book a consultation"
+  },
+  "secondary": {
+    "zh": "產品介紹",
+    "en": "View products"
+  },
+  "stats": [
+    {
+      "value": "1993",
+      "label": {
+        "zh": "年核准設立",
+        "en": "Year founded"
+      }
+    },
+    {
+      "value": "美日",
+      "label": {
+        "zh": "引進控制技術",
+        "en": "US & Japanese technology"
+      }
+    },
+    {
+      "value": "20+",
+      "label": {
+        "zh": "服務產業類別",
+        "en": "Industries served"
+      }
+    }
+  ]
+}

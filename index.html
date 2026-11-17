@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>清泰源實業股份有限公司｜工業微生物污染控制與管理</title>
+  <meta name="description" content="清泰源實業（GETX MICROBIOTECH）專業從事工業微生物污染控制與管理，提供殺菌劑、防腐劑、防黴劑與工程用洗淨劑。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">跳到主要內容</a>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="logo" href="#top" aria-label="Home">
+        <span class="logo-mark" id="logoMark"></span>
+        <span class="logo-name" data-t="brand.name"></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav" id="nav">
+        <a href="#about" data-t="ui.nav.about"></a>
+        <a href="#story" data-t="ui.nav.story"></a>
+        <a href="#services" data-t="ui.nav.services"></a>
+        <a href="#process" data-t="ui.nav.process"></a>
+        <a href="#cases" data-t="ui.nav.cases"></a>
+        <a href="#faq" data-t="ui.nav.faq"></a>
+        <button class="lang" id="langBtn" type="button" aria-label="Switch language"></button>
+        <a class="btn btn-primary btn-sm" href="#booking" data-t="ui.nav.book"></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap">
+        <p class="eyebrow" data-t="hero.eyebrow"></p>
+        <h1 data-t="hero.title"></h1>
+        <p class="lead" data-t="hero.lead"></p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#booking" data-t="hero.primary"></a>
+          <a class="btn btn-ghost" href="#services" data-t="hero.secondary"></a>
+        </div>
+        <dl class="stats" id="stats"></dl>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="wrap two-col">
+        <div>
+          <h2 data-t="about.title"></h2>
+          <div id="aboutText" class="prose"></div>
+          <div id="industries" class="industries">
+            <h3 data-t="about.industriesTitle"></h3>
+            <ul class="chips" id="industryList"></ul>
+          </div>
+        </div>
+        <dl class="facts" id="facts"></dl>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="story">
+      <div class="wrap two-col">
+        <div>
+          <h2 data-t="story.title"></h2>
+          <blockquote data-t="story.quote"></blockquote>
+          <div id="storyText" class="prose"></div>
+        </div>
+        <div id="storyAside">
+          <h3 data-t="story.listTitle"></h3>
+          <ol class="timeline" id="timeline"></ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="wrap">
+        <h2 data-t="services.title"></h2>
+        <p class="section-lead" data-t="services.lead"></p>
+        <div class="cards" id="serviceList"></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="process">
+      <div class="wrap">
+        <h2 data-t="process.title"></h2>
+        <ol class="steps" id="stepList"></ol>
+      </div>
+    </section>
+
+    <section class="section" id="cases">
+      <div class="wrap">
+        <h2 data-t="cases.title"></h2>
+        <p class="section-lead" data-t="cases.lead"></p>
+        <div class="filters" id="caseFilters" role="group"></div>
+        <div class="case-grid" id="caseList"></div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="faq">
+      <div class="wrap narrow">
+        <h2 data-t="faq.title"></h2>
+        <div id="faqList"></div>
+      </div>
+    </section>
+
+    <section class="section" id="booking">
+      <div class="wrap two-col">
+        <div>
+          <h2 data-t="bookingSection.title"></h2>
+          <p class="section-lead" data-t="bookingSection.lead"></p>
+          <form id="bookingForm" class="form" novalidate>
+            <div class="field">
+              <label for="f-name"><span data-t="ui.form.name"></span> *</label>
+              <input id="f-name" name="name" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="f-company" data-t="ui.form.company"></label>
+              <input id="f-company" name="company" autocomplete="organization">
+            </div>
+            <div class="field">
+              <label for="f-phone"><span data-t="ui.form.phone"></span> *</label>
+              <input id="f-phone" name="phone" type="tel" required autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="f-email"><span data-t="ui.form.email"></span> *</label>
+              <input id="f-email" name="email" type="email" required autocomplete="email">
+            </div>
+            <div class="field field-full">
+              <label for="f-service"><span data-t="ui.form.service"></span> *</label>
+              <select id="f-service" name="service" required></select>
+            </div>
+            <div class="field">
+              <label for="f-date"><span data-t="ui.form.date"></span> *</label>
+              <input id="f-date" name="date" type="date" required>
+            </div>
+            <div class="field">
+              <label for="f-time"><span data-t="ui.form.time"></span> *</label>
+              <select id="f-time" name="time" required></select>
+            </div>
+            <div class="field field-full">
+              <label for="f-notes" data-t="ui.form.notes"></label>
+              <textarea id="f-notes" name="notes" rows="4"></textarea>
+            </div>
+            <div class="field field-full">
+              <button class="btn btn-primary" type="submit" id="submitBtn" data-t="ui.form.submit"></button>
+              <p class="form-msg" id="formMsg" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+        <aside class="contact-card">
+          <h3 data-t="bookingSection.contactTitle"></h3>
+          <dl id="contactList"></dl>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <span id="copyright"></span>
+      <a href="#top">↑ Top</a>
+    </div>
+  </footer>
+
+  <script src="js/site.js"></script>
+</body>
+</html>

@@ -1,0 +1,643 @@
+# Pages CMS 設定檔（https://pagescms.org）—— 定義後台可以編輯哪些內容
+# 圖片會上傳到 images/ 資料夾
+media:
+  input: images
+  output: /images
+  categories: [image]
+
+content:
+  - name: settings
+    label: "基本設定（品牌、聯絡方式、預約）"
+    type: file
+    path: content/settings.json
+    format: json
+    fields:
+      - name: brand
+        label: "品牌素材"
+        type: object
+        fields:
+          - name: name
+            label: "名稱"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: fullName
+            label: "公司全名"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: logoImage
+            label: "Logo 圖片（建議透明背景）"
+            type: image
+          - name: logoLetter
+            label: "無 Logo 時顯示的字母"
+            type: string
+          - name: color
+            label: "品牌標準色（色碼，如 #1f4fd8）"
+            type: string
+          - name: colorDark
+            label: "標準色深色版（滑鼠移入時）"
+            type: string
+      - name: contact
+        label: "聯絡方式"
+        type: object
+        fields:
+          - name: phone
+            label: "電話"
+            type: string
+          - name: fax
+            label: "傳真（留空則不顯示）"
+            type: string
+          - name: email
+            label: "電子郵件"
+            type: string
+          - name: address
+            label: "地址"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: hours
+            label: "營業時間（留空則不顯示）"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: mapUrl
+            label: "Google 地圖連結（選填）"
+            type: string
+      - name: booking
+        label: "線上預約"
+        type: object
+        fields:
+          - name: endpoint
+            label: "表單服務網址（留空＝改用郵件軟體寄出）"
+            type: string
+          - name: slots
+            label: "可預約時段"
+            type: string
+            list: true
+
+  - name: hero
+    label: "首頁主視覺"
+    type: file
+    path: content/hero.json
+    format: json
+    fields:
+      - name: eyebrow
+        label: "小標"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: title
+        label: "標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: text }
+          - { name: en, label: "English", type: text }
+      - name: lead
+        label: "引言"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: text }
+          - { name: en, label: "English", type: text }
+      - name: primary
+        label: "主要按鈕文字"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: secondary
+        label: "次要按鈕文字"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: stats
+        label: "數據"
+        type: object
+        list:
+          collapsible: true
+        fields:
+          - name: value
+            label: "內容"
+            type: string
+          - name: label
+            label: "名稱"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+
+  - name: about
+    label: "公司簡介"
+    type: file
+    path: content/about.json
+    format: json
+    fields:
+      - name: title
+        label: "標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: paragraphs
+        label: "段落"
+        type: object
+        list: true
+        fields:
+          - { name: zh, label: "中文", type: text }
+          - { name: en, label: "English", type: text }
+      - name: industriesTitle
+        label: "客戶群標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: industries
+        label: "主要客戶群（產業標籤，清空則隱藏）"
+        type: object
+        list: true
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: facts
+        label: "公司資料"
+        type: object
+        list:
+          collapsible: true
+        fields:
+          - name: label
+            label: "名稱"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: value
+            label: "內容"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+
+  - name: story
+    label: "微生物控制技術"
+    type: file
+    path: content/story.json
+    format: json
+    fields:
+      - name: title
+        label: "標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: quote
+        label: "重點引言"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: text }
+          - { name: en, label: "English", type: text }
+      - name: paragraphs
+        label: "段落"
+        type: object
+        list: true
+        fields:
+          - { name: zh, label: "中文", type: text }
+          - { name: en, label: "English", type: text }
+      - name: listTitle
+        label: "右側清單標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: milestones
+        label: "右側清單（營業項目／里程碑，清空則隱藏）"
+        type: object
+        list:
+          collapsible: true
+        fields:
+          - name: year
+            label: "年份（可留空）"
+            type: string
+          - name: text
+            label: "說明"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: text }
+              - { name: en, label: "English", type: text }
+
+  - name: services
+    label: "產品介紹"
+    type: file
+    path: content/services.json
+    format: json
+    fields:
+      - name: title
+        label: "標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: lead
+        label: "引言"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: items
+        label: "項目"
+        type: object
+        list:
+          collapsible: true
+        fields:
+          - name: name
+            label: "名稱"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: desc
+            label: "簡短說明"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: text }
+              - { name: en, label: "English", type: text }
+          - name: audience
+            label: "適用範圍"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: text }
+              - { name: en, label: "English", type: text }
+          - name: specs
+            label: "產品特色"
+            type: object
+            list: true
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+
+  - name: process
+    label: "服務流程"
+    type: file
+    path: content/process.json
+    format: json
+    fields:
+      - name: title
+        label: "標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: steps
+        label: "步驟"
+        type: object
+        list:
+          collapsible: true
+        fields:
+          - name: name
+            label: "名稱"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: desc
+            label: "簡短說明"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+
+  - name: cases
+    label: "成功案例（沒有項目時整區隱藏）"
+    type: file
+    path: content/cases.json
+    format: json
+    fields:
+      - name: title
+        label: "標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: lead
+        label: "引言"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: items
+        label: "項目"
+        type: object
+        list:
+          collapsible: true
+        fields:
+          - name: category
+            label: "分類"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: title
+            label: "標題"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: client
+            label: "客戶"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: result
+            label: "成果"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: image
+            label: "圖片"
+            type: image
+
+  - name: faq
+    label: "常見問題（沒有項目時整區隱藏）"
+    type: file
+    path: content/faq.json
+    format: json
+    fields:
+      - name: title
+        label: "標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: items
+        label: "項目"
+        type: object
+        list:
+          collapsible: true
+        fields:
+          - name: q
+            label: "問題"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: a
+            label: "回答"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: text }
+              - { name: en, label: "English", type: text }
+
+  - name: bookingSection
+    label: "預約區塊文字"
+    type: file
+    path: content/bookingSection.json
+    format: json
+    fields:
+      - name: title
+        label: "標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+      - name: lead
+        label: "引言"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: text }
+          - { name: en, label: "English", type: text }
+      - name: contactTitle
+        label: "聯絡方式標題"
+        type: object
+        fields:
+          - { name: zh, label: "中文", type: string }
+          - { name: en, label: "English", type: string }
+
+  - name: ui
+    label: "介面文字（選單、按鈕、表單）"
+    type: file
+    path: content/ui.json
+    format: json
+    fields:
+      - name: nav
+        label: "選單"
+        type: object
+        fields:
+          - name: about
+            label: "關於我們"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: story
+            label: "品牌故事"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: services
+            label: "服務內容"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: process
+            label: "服務流程"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: cases
+            label: "成功案例"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: faq
+            label: "常見問題"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: book
+            label: "預約按鈕"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+      - name: labels
+        label: "標籤文字"
+        type: object
+        fields:
+          - name: audience
+            label: "適用對象"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: includes
+            label: "服務內容"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: all
+            label: "全部"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: client
+            label: "客戶"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: phone
+            label: "電話"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: fax
+            label: "傳真"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: email
+            label: "電子郵件"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: address
+            label: "地址"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: hours
+            label: "營業時間"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: map
+            label: "地圖連結文字"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: rights
+            label: "版權文字"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+      - name: form
+        label: "表單文字"
+        type: object
+        fields:
+          - name: name
+            label: "名稱"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: company
+            label: "公司名稱"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: phone
+            label: "電話"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: email
+            label: "電子郵件"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: service
+            label: "服務"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: date
+            label: "日期"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: time
+            label: "時段"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: notes
+            label: "備註"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: choose
+            label: "請選擇"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: submit
+            label: "送出按鈕"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: sending
+            label: "送出中"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: required
+            label: "必填提示"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: badEmail
+            label: "Email 格式錯誤提示"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: okMail
+            label: "成功訊息（郵件軟體）"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: text }
+              - { name: en, label: "English", type: text }
+          - name: okSent
+            label: "成功訊息（表單服務）"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: text }
+              - { name: en, label: "English", type: text }
+          - name: fail
+            label: "失敗訊息"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: text }
+              - { name: en, label: "English", type: text }

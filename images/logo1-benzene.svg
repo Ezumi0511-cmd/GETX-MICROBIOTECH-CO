@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <rect width="400" height="400" fill="#ffffff"/>
+  <g stroke="#C8102E" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <!-- 外環 -->
+    <polygon points="200,75 277.9,120 277.9,210 200,255 122.1,210 122.1,120" stroke-width="12"/>
+    <!-- 交替雙鍵 -->
+    <line x1="208.6" y1="104" x2="248.6" y2="127" stroke-width="9"/>
+    <line x1="248.6" y1="203" x2="208.6" y2="226" stroke-width="9"/>
+    <line x1="142.8" y1="188" x2="142.8" y2="142" stroke-width="9"/>
+    <!-- 取代基 -->
+    <line x1="277.9" y1="120" x2="330" y2="90" stroke-width="10"/>
+  </g>
+  <g fill="#C8102E" stroke="#ffffff" stroke-width="4">
+    <circle cx="200" cy="75" r="14"/>
+    <circle cx="277.9" cy="120" r="14"/>
+    <circle cx="277.9" cy="210" r="14"/>
+    <circle cx="200" cy="255" r="14"/>
+    <circle cx="122.1" cy="210" r="14"/>
+    <circle cx="122.1" cy="120" r="14"/>
+    <circle cx="330" cy="90" r="18" fill="#E63946"/>
+  </g>
+  <text x="200" y="330" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="3" fill="#C8102E">BIOTECH GETX</text>
+  <text x="200" y="364" text-anchor="middle" font-family="'Microsoft JhengHei', 'PingFang TC', 'Noto Sans TC', sans-serif" font-size="18" letter-spacing="4" fill="#7A0A1C">您專業的微生物控制專家</text>
+</svg>

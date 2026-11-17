@@ -86,6 +86,9 @@ content:
     path: content/hero.json
     format: json
     fields:
+      - name: image
+        label: "背景圖片（人物或重點建議在右側，左側放文字）"
+        type: image
       - name: eyebrow
         label: "小標"
         type: object
@@ -138,6 +141,9 @@ content:
     path: content/about.json
     format: json
     fields:
+      - name: image
+        label: "圖片（留空則不顯示）"
+        type: image
       - name: title
         label: "標題"
         type: object
@@ -189,6 +195,9 @@ content:
     path: content/story.json
     format: json
     fields:
+      - name: image
+        label: "圖片（留空則不顯示）"
+        type: image
       - name: title
         label: "標題"
         type: object
@@ -236,6 +245,9 @@ content:
     path: content/services.json
     format: json
     fields:
+      - name: image
+        label: "橫幅圖片（留空則不顯示）"
+        type: image
       - name: title
         label: "標題"
         type: object
@@ -298,6 +310,9 @@ content:
         list:
           collapsible: true
         fields:
+          - name: image
+            label: "圖片（留空則不顯示）"
+            type: image
           - name: name
             label: "名稱"
             type: object
@@ -400,6 +415,9 @@ content:
     path: content/bookingSection.json
     format: json
     fields:
+      - name: image
+        label: "聯絡卡片圖片（留空則不顯示）"
+        type: image
       - name: title
         label: "標題"
         type: object

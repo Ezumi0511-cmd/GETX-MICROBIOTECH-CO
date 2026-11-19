@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>網站後台｜聯絡紀錄</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body { background: var(--bg-alt); }
+    .admin { max-width: 1280px; margin: 0 auto; padding: 28px 20px 60px; }
+    .admin-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+    .admin-head h1 { font-size: 1.5rem; margin: 0; }
+    .panel { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+    .login { max-width: 380px; margin: 12vh auto 0; }
+    .login .field { margin-bottom: 14px; }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 12px; margin-bottom: 16px; }
+    .stat { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+    .stat b { display: block; font-size: 1.6rem; color: var(--brand); font-variant-numeric: tabular-nums; }
+    .stat span { color: var(--muted); font-size: .9rem; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+    .tabs button[aria-selected="true"] { background: var(--brand); color: #fff; border-color: var(--brand); }
+    .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; margin-bottom: 14px; }
+    .toolbar .field { flex: 1 1 160px; }
+    .toolbar .field.grow { flex: 3 1 240px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+    table { border-collapse: collapse; width: 100%; font-size: .92rem; background: #fff; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { background: var(--bg-alt); white-space: nowrap; position: sticky; top: 0; }
+    td { white-space: pre-wrap; min-width: 90px; }
+    td.notes { min-width: 240px; }
+    td.nowrap { white-space: nowrap; }
+    tbody tr:hover { background: #f9fbfc; }
+    .empty { padding: 28px; text-align: center; color: var(--muted); }
+    .count { color: var(--muted); font-size: .9rem; margin: 10px 2px 0; }
+  </style>
+</head>
+<body>
+  <main class="admin">
+    <section class="panel login" id="loginBox">
+      <h1 style="font-size:1.3rem">網站後台登入</h1>
+      <p style="color:var(--muted);font-size:.92rem">查看「預約諮詢」聯絡紀錄與每日瀏覽人次。</p>
+      <form id="loginForm">
+        <div class="field">
+          <label for="pw">後台密碼</label>
+          <input id="pw" type="password" autocomplete="current-password" required>
+        </div>
+        <button class="btn btn-primary" id="loginBtn" type="submit">登入</button>
+        <p class="form-msg err" id="loginMsg"></p>
+      </form>
+    </section>
+
+    <div id="app" hidden>
+      <div class="admin-head">
+        <h1>聯絡紀錄後台</h1>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" id="refreshBtn" type="button">重新整理</button>
+          <button class="btn btn-primary btn-sm" id="exportBtn" type="button">匯出 Excel</button>
+          <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">登出</button>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b id="sToday">0</b><span>今日瀏覽人次</span></div>
+        <div class="stat"><b id="s30">0</b><span>近 30 天瀏覽人次</span></div>
+        <div class="stat"><b id="sContactsToday">0</b><span>今日新聯絡</span></div>
+        <div class="stat"><b id="sContacts">0</b><span>聯絡紀錄總數</span></div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="btn btn-ghost btn-sm" role="tab" data-tab="contacts" aria-selected="true" type="button">聯絡紀錄</button>
+        <button class="btn btn-ghost btn-sm" role="tab" data-tab="visits" aria-selected="false" type="button">每日瀏覽人次</button>
+      </div>
+
+      <div class="panel">
+        <div class="toolbar">
+          <div class="field grow">
+            <label for="q">搜尋（姓名、公司、電話、Email、內容）</label>
+            <input id="q" type="search">
+          </div>
+          <div class="field">
+            <label for="from">起始日期</label>
+            <input id="from" type="date">
+          </div>
+          <div class="field">
+            <label for="to">結束日期</label>
+            <input id="to" type="date">
+          </div>
+        </div>
+        <div class="table-wrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+        <p class="count" id="countMsg"></p>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    var endpoint = "", password = "", data = null, tab = "contacts";
+
+    function today(d) {
+      d = d || new Date();
+      var p = function (n) { return String(n).padStart(2, "0"); };
+      return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+    }
+
+    function call() {
+      return fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "list", password: password })
+      }).then(function (r) { return r.json(); });
+    }
+
+    function load() {
+      $("refreshBtn").disabled = true;
+      return call().then(function (res) {
+        if (!res.ok) throw new Error(res.error === "auth" ? "密碼錯誤" : (res.error || "讀取失敗"));
+        data = res;
+        render();
+      }).finally(function () { $("refreshBtn").disabled = false; });
+    }
+
+    // 套用搜尋與日期篩選；最新的排最前面
+    function filtered() {
+      var t = data[tab], q = $("q").value.trim().toLowerCase(), from = $("from").value, to = $("to").value;
+      return t.rows.filter(function (r) {
+        var d = String(r[0]).slice(0, 10);
+        if (from && d < from) return false;
+        if (to && d > to) return false;
+        return !q || r.join(" ").toLowerCase().indexOf(q) >= 0;
+      }).reverse();
+    }
+
+    function render() {
+      var c = data.contacts.rows, v = data.visits.rows, d = today();
+      var since = today(new Date(Date.now() - 29 * 864e5));
+      var sum = function (rows) { return rows.reduce(function (s, r) { return s + (Number(r[1]) || 0); }, 0); };
+      $("sToday").textContent = sum(v.filter(function (r) { return r[0] === d; })).toLocaleString();
+      $("s30").textContent = sum(v.filter(function (r) { return r[0] >= since; })).toLocaleString();
+      $("sContactsToday").textContent = c.filter(function (r) { return String(r[0]).slice(0, 10) === d; }).length;
+      $("sContacts").textContent = c.length;
+
+      var t = data[tab], rows = filtered();
+      var tr = document.createElement("tr");
+      t.headers.forEach(function (h) { var th = document.createElement("th"); th.textContent = h; tr.append(th); });
+      $("thead").replaceChildren(tr);
+      $("tbody").replaceChildren.apply($("tbody"), rows.length ? rows.map(function (r) {
+        var row = document.createElement("tr");
+        t.headers.forEach(function (h, i) {
+          var td = document.createElement("td");
+          td.textContent = r[i] == null ? "" : r[i];
+          if (h === "需求說明") td.className = "notes";
+          else if (/時間|日期|時段|電話/.test(h)) td.className = "nowrap";
+          row.append(td);
+        });
+        return row;
+      }) : [(function () {
+        var row = document.createElement("tr"), td = document.createElement("td");
+        td.colSpan = t.headers.length || 1; td.className = "empty"; td.textContent = "沒有符合的紀錄";
+        row.append(td); return row;
+      })()]);
+      $("countMsg").textContent = "顯示 " + rows.length + " / 共 " + t.rows.length + " 筆";
+    }
+
+    function exportExcel() {
+      if (!window.XLSX) { alert("Excel 元件載入失敗，請檢查網路後重新整理頁面。"); return; }
+      var wb = XLSX.utils.book_new();
+      [["contacts", "聯絡紀錄"], ["visits", "瀏覽人次"]].forEach(function (x) {
+        var keep = tab; tab = x[0];
+        var rows = filtered().slice().reverse(); // 匯出時依時間由舊到新
+        tab = keep;
+        var ws = XLSX.utils.aoa_to_sheet([data[x[0]].headers].concat(rows));
+        ws["!cols"] = data[x[0]].headers.map(function (h, i) {
+          var w = Math.max(String(h).length * 2, 8);
+          rows.forEach(function (r) { w = Math.max(w, Math.min(String(r[i] || "").length * 1.6, 60)); });
+          return { wch: w };
+        });
+        XLSX.utils.book_append_sheet(wb, ws, x[1]);
+      });
+      XLSX.writeFile(wb, "聯絡紀錄_" + today() + ".xlsx");
+    }
+
+    $("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      password = $("pw").value;
+      $("loginBtn").disabled = true;
+      $("loginMsg").textContent = "";
+      load().then(function () {
+        try { sessionStorage.setItem("adminPw", password); } catch (err) {}
+        $("loginBox").hidden = true;
+        $("app").hidden = false;
+      }).catch(function (err) {
+        $("loginMsg").textContent = err.message === "Failed to fetch" ? "無法連線到後端服務" : err.message;
+      }).finally(function () { $("loginBtn").disabled = false; });
+    });
+
+    $("logoutBtn").addEventListener("click", function () {
+      try { sessionStorage.removeItem("adminPw"); } catch (err) {}
+      location.reload();
+    });
+    $("refreshBtn").addEventListener("click", function () { load().catch(function (err) { alert(err.message); }); });
+    $("exportBtn").addEventListener("click", exportExcel);
+    ["q", "from", "to"].forEach(function (id) { $(id).addEventListener("input", function () { if (data) render(); }); });
+    document.querySelectorAll("[data-tab]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        tab = b.dataset.tab;
+        document.querySelectorAll("[data-tab]").forEach(function (x) { x.setAttribute("aria-selected", String(x === b)); });
+        render();
+      });
+    });
+
+    // 後端網址沿用 Pages CMS「基本設定 → 線上預約 → 後端服務網址」
+    fetch("content/settings.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (s) {
+      var b = s.brand || {}, root = document.documentElement.style;
+      if (b.color) root.setProperty("--brand", b.color);
+      if (b.colorDark) root.setProperty("--brand-dark", b.colorDark);
+      endpoint = (s.booking && s.booking.endpoint) || "";
+      if (!endpoint) {
+        $("loginMsg").textContent = "尚未設定後端服務網址：請到 Pages CMS「基本設定 → 線上預約」填入 Google Apps Script 網址。";
+        $("loginBtn").disabled = true;
+        return;
+      }
+      var saved = "";
+      try { saved = sessionStorage.getItem("adminPw") || ""; } catch (err) {}
+      if (saved) { $("pw").value = saved; $("loginForm").requestSubmit(); }
+    }).catch(function () {
+      $("loginMsg").textContent = "設定檔載入失敗。若在本機開啟，請改用 preview.bat。";
+    });
+  })();
+  </script>
+</body>
+</html>

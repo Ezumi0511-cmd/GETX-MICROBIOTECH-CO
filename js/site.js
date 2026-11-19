@@ -148,6 +148,7 @@
 
     $("copyright").textContent =
       "© " + new Date().getFullYear() + " " + t(S.brand.fullName) + " " + t(S.ui.labels.rights);
+    renderVisits();
   }
 
   function setImg(img, path, alt) {
@@ -306,12 +307,16 @@
 
       btn.disabled = true;
       say(S.ui.form.sending);
+      // 用 text/plain 送出：Google Apps Script 不支援跨網域預檢（preflight）
       fetch(S.booking.endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(data)
       }).then(function (r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json().catch(function () { return { ok: true }; });
+      }).then(function (res) {
+        if (res && res.ok === false) throw new Error(res.error || "rejected");
         form.reset();
         say(S.ui.form.okSent, "ok");
       }).catch(function () {
@@ -320,6 +325,27 @@
         btn.disabled = false;
       });
     });
+  }
+
+  /* ---------- 今日瀏覽人次 ---------- */
+  // 每個瀏覽工作階段（開著分頁期間）只算一次，重新整理不會重複計算
+  var visitCount = null;
+  function renderVisits() {
+    var box = $("visits");
+    box.hidden = visitCount == null;
+    if (visitCount != null) box.textContent = (t(S.ui.labels.todayVisits) || "今日瀏覽人次") + " " + visitCount.toLocaleString();
+  }
+  function loadVisits() {
+    if (!S.booking.endpoint) return;
+    var key = "visit-" + new Date().toDateString(), counted = false;
+    try { counted = sessionStorage.getItem(key) === "1"; } catch (e) {}
+    var url = S.booking.endpoint + (S.booking.endpoint.indexOf("?") < 0 ? "?" : "&") + "action=" + (counted ? "count" : "hit");
+    fetch(url).then(function (r) { return r.json(); }).then(function (res) {
+      if (!res || !res.ok) return;
+      try { sessionStorage.setItem(key, "1"); } catch (e) {}
+      visitCount = Number(res.count) || 0;
+      renderVisits();
+    }).catch(function () { /* 計數服務暫時無法使用時就不顯示 */ });
   }
 
   /* ---------- 啟動 ---------- */
@@ -356,6 +382,7 @@
     if (S.brand.colorDark) document.documentElement.style.setProperty("--brand-dark", S.brand.colorDark);
     render();
     setupForm();
+    loadVisits();
   }).catch(function (err) {
     console.error(err);
     var box = el("p", null,

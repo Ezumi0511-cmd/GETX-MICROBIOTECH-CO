@@ -73,6 +73,10 @@
     "rights": {
       "zh": "版權所有",
       "en": "All rights reserved."
+    },
+    "todayVisits": {
+      "zh": "今日瀏覽人次",
+      "en": "Visitors today:"
     }
   },
   "form": {

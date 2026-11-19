@@ -205,6 +205,7 @@ details p { padding: 0 22px 18px; margin: 0; color: var(--muted); }
 .site-footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: .9rem; }
 .footer-row { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .site-footer a { color: var(--muted); text-decoration: none; }
+.visits { font-variant-numeric: tabular-nums; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {

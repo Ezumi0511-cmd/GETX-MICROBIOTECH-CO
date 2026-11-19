@@ -73,7 +73,7 @@ content:
         type: object
         fields:
           - name: endpoint
-            label: "表單服務網址（留空＝改用郵件軟體寄出）"
+            label: "後端服務網址（Google Apps Script 網址；填了才會保存聯絡紀錄、顯示今日瀏覽人次。留空＝表單改用郵件軟體寄出）"
             type: string
           - name: slots
             label: "可預約時段"
@@ -555,6 +555,12 @@ content:
               - { name: en, label: "English", type: string }
           - name: rights
             label: "版權文字"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: todayVisits
+            label: "頁尾「今日瀏覽人次」文字"
             type: object
             fields:
               - { name: zh, label: "中文", type: string }

@@ -30,6 +30,14 @@
       "14:00",
       "15:30",
       "17:00"
-    ]
+    ],
+    "confirmSubject": {
+      "zh": "【清泰源實業】預約確認通知：{date} {time}",
+      "en": "Booking confirmed: {date} {time} | GETX MICROBIOTECH"
+    },
+    "confirmBody": {
+      "zh": "{name} 您好：\n\n感謝您預約清泰源實業的諮詢服務，以下是您的預約內容：\n\n日期：{date}\n時段：{time}\n諮詢項目：{service}\n\n如需更改時間，請直接回覆此信，或來電 02-2917-1791。\n\n清泰源實業股份有限公司\n電話：02-2917-1791｜傳真：02-2911-0657\n地址：新北市新店區北新路一段40號2樓",
+      "en": "Dear {name},\n\nThank you for booking a consultation with GETX MICROBIOTECH. Your appointment is confirmed:\n\nDate: {date}\nTime: {time}\nTopic: {service}\n\nTo reschedule, simply reply to this email or call +886-2-2917-1791.\n\nGETX MICROBIOTECH CO., LTD.\nTel: +886-2-2917-1791 | Fax: +886-2-2911-0657\n2F, No. 40, Sec. 1, Beixin Rd., Xindian Dist., New Taipei City, Taiwan"
+    }
   }
 }

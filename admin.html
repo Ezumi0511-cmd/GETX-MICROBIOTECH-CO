@@ -9,20 +9,22 @@
   <link rel="stylesheet" href="css/style.css">
   <style>
     body { background: var(--bg-alt); }
-    .admin { max-width: 1280px; margin: 0 auto; padding: 28px 20px 60px; }
+    .admin { max-width: 1320px; margin: 0 auto; padding: 28px 20px 60px; }
     .admin-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
     .admin-head h1 { font-size: 1.5rem; margin: 0; }
+    .admin-head .sub { color: var(--muted); font-size: .85rem; margin: 2px 0 0; }
     .panel { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
     .login { max-width: 380px; margin: 12vh auto 0; }
     .login .field { margin-bottom: 14px; }
     .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 12px; margin-bottom: 16px; }
     .stat { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
     .stat b { display: block; font-size: 1.6rem; color: var(--brand); font-variant-numeric: tabular-nums; }
+    .stat.alert b { color: #b45309; }
     .stat span { color: var(--muted); font-size: .9rem; }
     .tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
     .tabs button[aria-selected="true"] { background: var(--brand); color: #fff; border-color: var(--brand); }
     .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; margin-bottom: 14px; }
-    .toolbar .field { flex: 1 1 160px; }
+    .toolbar .field { flex: 1 1 150px; }
     .toolbar .field.grow { flex: 3 1 240px; }
     .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
     table { border-collapse: collapse; width: 100%; font-size: .92rem; background: #fff; }
@@ -31,16 +33,34 @@
     td { white-space: pre-wrap; min-width: 90px; }
     td.notes { min-width: 240px; }
     td.nowrap { white-space: nowrap; }
-    tbody tr:hover { background: #f9fbfc; }
+    tr.pending td { background: #fffbeb; }
+    tbody tr:hover td { background: #f6f9fb; }
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: .82rem; font-weight: 500; white-space: nowrap; }
+    .badge.pending { background: #fef3c7; color: #92400e; }
+    .badge.done { background: #dcfce7; color: #166534; }
+    td .btn { white-space: nowrap; }
     .empty { padding: 28px; text-align: center; color: var(--muted); }
     .count { color: var(--muted); font-size: .9rem; margin: 10px 2px 0; }
+
+    dialog { border: 0; border-radius: 14px; padding: 0; width: min(640px, calc(100% - 24px)); max-height: calc(100% - 24px); box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+    dialog::backdrop { background: rgba(15, 23, 42, .45); }
+    .dlg { padding: 22px 24px; display: grid; gap: 14px; }
+    .dlg h2 { font-size: 1.2rem; margin: 0; }
+    .summary { background: var(--bg-alt); border-radius: var(--radius); padding: 12px 16px; font-size: .9rem; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; margin: 0; }
+    .summary dt { color: var(--muted); }
+    .summary dd { margin: 0; white-space: pre-wrap; }
+    .dlg textarea { min-height: 260px; font-family: inherit; }
+    .dlg .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .tpl-lang button[aria-pressed="true"] { border-color: var(--brand); color: var(--brand); background: #f0fdfa; }
+    .dlg .actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+    .hint { color: var(--muted); font-size: .85rem; margin: 0; }
   </style>
 </head>
 <body>
   <main class="admin">
     <section class="panel login" id="loginBox">
       <h1 style="font-size:1.3rem">網站後台登入</h1>
-      <p style="color:var(--muted);font-size:.92rem">查看「預約諮詢」聯絡紀錄與每日瀏覽人次。</p>
+      <p style="color:var(--muted);font-size:.92rem">查看「預約諮詢」聯絡紀錄、確認並寄送確認信，以及每日瀏覽人次。</p>
       <form id="loginForm">
         <div class="field">
           <label for="pw">後台密碼</label>
@@ -53,7 +73,10 @@
 
     <div id="app" hidden>
       <div class="admin-head">
-        <h1>聯絡紀錄後台</h1>
+        <div>
+          <h1>聯絡紀錄後台</h1>
+          <p class="sub" id="updated"></p>
+        </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-ghost btn-sm" id="refreshBtn" type="button">重新整理</button>
           <button class="btn btn-primary btn-sm" id="exportBtn" type="button">匯出 Excel</button>
@@ -62,10 +85,10 @@
       </div>
 
       <div class="stats">
+        <div class="stat alert"><b id="sPending">0</b><span>待確認預約</span></div>
+        <div class="stat"><b id="sContactsToday">0</b><span>今日新聯絡</span></div>
         <div class="stat"><b id="sToday">0</b><span>今日瀏覽人次</span></div>
         <div class="stat"><b id="s30">0</b><span>近 30 天瀏覽人次</span></div>
-        <div class="stat"><b id="sContactsToday">0</b><span>今日新聯絡</span></div>
-        <div class="stat"><b id="sContacts">0</b><span>聯絡紀錄總數</span></div>
       </div>
 
       <div class="tabs" role="tablist">
@@ -78,6 +101,14 @@
           <div class="field grow">
             <label for="q">搜尋（姓名、公司、電話、Email、內容）</label>
             <input id="q" type="search">
+          </div>
+          <div class="field" id="statusField">
+            <label for="status">狀態</label>
+            <select id="status">
+              <option value="">全部</option>
+              <option value="待確認">待確認</option>
+              <option value="已確認">已確認</option>
+            </select>
           </div>
           <div class="field">
             <label for="from">起始日期</label>
@@ -94,12 +125,48 @@
     </div>
   </main>
 
+  <dialog id="dlg">
+    <form class="dlg" id="dlgForm" method="dialog">
+      <h2>確認預約並寄送確認信</h2>
+      <dl class="summary" id="dlgSummary"></dl>
+      <div class="row tpl-lang" id="dlgLang">
+        <span class="hint">信件範本：</span>
+        <button class="btn btn-ghost btn-sm" type="button" data-lang="zh">中文</button>
+        <button class="btn btn-ghost btn-sm" type="button" data-lang="en">English</button>
+      </div>
+      <div class="field">
+        <label for="mTo">收件人</label>
+        <input id="mTo" type="email" required autofocus>
+      </div>
+      <div class="field">
+        <label for="mSubject">主旨</label>
+        <input id="mSubject" required>
+      </div>
+      <div class="field">
+        <label for="mBody">內容（可直接修改，例如調整日期或時段）</label>
+        <textarea id="mBody" required></textarea>
+      </div>
+      <p class="hint">信件會從部署後端的 Google 帳號寄出，客戶回信也會寄到該帳號。</p>
+      <p class="form-msg" id="dlgMsg"></p>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm" type="button" id="dlgCancel">取消</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="dlgMark">只標記已確認（不寄信）</button>
+        <button class="btn btn-primary btn-sm" type="button" id="dlgSend">寄出並標記已確認</button>
+      </div>
+    </form>
+  </dialog>
+
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <script>
   (function () {
     "use strict";
     var $ = function (id) { return document.getElementById(id); };
-    var endpoint = "", password = "", data = null, tab = "contacts";
+    var endpoint = "", password = "", settings = {}, data = null, tab = "contacts", current = null, busy = false;
+    var productNames = []; // [{zh, en}]，來自 content/services.json
+    fetch("content/services.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (s) {
+      productNames = (s.items || []).map(function (x) { return x.name || {}; });
+    }).catch(function () {});
+    var HIDDEN = ["編號"]; // 只給系統用、不顯示也不匯出的欄位
 
     function today(d) {
       d = d || new Date();
@@ -107,74 +174,195 @@
       return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
     }
 
-    function call() {
+    function api(payload) {
+      payload.password = password;
       return fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ action: "list", password: password })
-      }).then(function (r) { return r.json(); });
+        body: JSON.stringify(payload)
+      }).then(function (r) { return r.json(); }).then(function (res) {
+        if (!res.ok) throw new Error(res.error === "auth" ? "密碼錯誤" : (res.error || "操作失敗"));
+        return res;
+      });
     }
 
     function load() {
+      busy = true;
       $("refreshBtn").disabled = true;
-      return call().then(function (res) {
-        if (!res.ok) throw new Error(res.error === "auth" ? "密碼錯誤" : (res.error || "讀取失敗"));
+      return api({ action: "list" }).then(function (res) {
         data = res;
+        $("updated").textContent = "最後更新 " + new Date().toLocaleTimeString() + "（每分鐘自動更新）";
         render();
-      }).finally(function () { $("refreshBtn").disabled = false; });
+      }).finally(function () { busy = false; $("refreshBtn").disabled = false; });
     }
 
-    // 套用搜尋與日期篩選；最新的排最前面
-    function filtered() {
-      var t = data[tab], q = $("q").value.trim().toLowerCase(), from = $("from").value, to = $("to").value;
+    function col(name) { return data.contacts.headers.indexOf(name); }
+    function isPending(r) { var i = col("狀態"); return i >= 0 && r[i] !== "已確認"; }
+
+    // 套用搜尋、狀態與日期篩選；最新的排最前面
+    function filtered(which) {
+      var t = data[which], q = $("q").value.trim().toLowerCase(), from = $("from").value, to = $("to").value;
+      var st = which === "contacts" ? $("status").value : "";
       return t.rows.filter(function (r) {
         var d = String(r[0]).slice(0, 10);
         if (from && d < from) return false;
         if (to && d > to) return false;
+        if (st === "待確認" && !isPending(r)) return false;
+        if (st === "已確認" && isPending(r)) return false;
         return !q || r.join(" ").toLowerCase().indexOf(q) >= 0;
       }).reverse();
+    }
+
+    function visibleCols(which) {
+      var h = data[which].headers;
+      var cols = h.map(function (x, i) { return i; }).filter(function (i) { return HIDDEN.indexOf(h[i]) < 0; });
+      // 「狀態」放最前面，不用左右捲動就看得到
+      var st = h.indexOf("狀態");
+      return st >= 0 ? [st].concat(cols.filter(function (i) { return i !== st; })) : cols;
     }
 
     function render() {
       var c = data.contacts.rows, v = data.visits.rows, d = today();
       var since = today(new Date(Date.now() - 29 * 864e5));
       var sum = function (rows) { return rows.reduce(function (s, r) { return s + (Number(r[1]) || 0); }, 0); };
+      var pending = c.filter(isPending).length;
+      $("sPending").textContent = pending;
+      $("sContactsToday").textContent = c.filter(function (r) { return String(r[0]).slice(0, 10) === d; }).length;
       $("sToday").textContent = sum(v.filter(function (r) { return r[0] === d; })).toLocaleString();
       $("s30").textContent = sum(v.filter(function (r) { return r[0] >= since; })).toLocaleString();
-      $("sContactsToday").textContent = c.filter(function (r) { return String(r[0]).slice(0, 10) === d; }).length;
-      $("sContacts").textContent = c.length;
+      document.title = (pending ? "(" + pending + ") " : "") + "網站後台｜聯絡紀錄";
+      $("statusField").hidden = tab !== "contacts";
 
-      var t = data[tab], rows = filtered();
+      var t = data[tab], rows = filtered(tab), cols = visibleCols(tab), isC = tab === "contacts";
       var tr = document.createElement("tr");
-      t.headers.forEach(function (h) { var th = document.createElement("th"); th.textContent = h; tr.append(th); });
+      if (isC) { var th = document.createElement("th"); th.textContent = "操作"; tr.append(th); }
+      cols.forEach(function (i) { var th = document.createElement("th"); th.textContent = t.headers[i]; tr.append(th); });
       $("thead").replaceChildren(tr);
-      $("tbody").replaceChildren.apply($("tbody"), rows.length ? rows.map(function (r) {
+
+      var out = rows.map(function (r) {
         var row = document.createElement("tr");
-        t.headers.forEach(function (h, i) {
-          var td = document.createElement("td");
-          td.textContent = r[i] == null ? "" : r[i];
-          if (h === "需求說明") td.className = "notes";
-          else if (/時間|日期|時段|電話/.test(h)) td.className = "nowrap";
+        if (isC && isPending(r)) row.className = "pending";
+        if (isC) {
+          var act = document.createElement("td"), btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "btn btn-sm " + (isPending(r) ? "btn-primary" : "btn-ghost");
+          btn.textContent = isPending(r) ? "確認並寄送" : "再次寄送";
+          btn.addEventListener("click", function () { openDialog(r); });
+          act.append(btn);
+          row.append(act);
+        }
+        cols.forEach(function (i) {
+          var h = t.headers[i], td = document.createElement("td"), val = r[i] == null ? "" : r[i];
+          if (h === "狀態") {
+            var b = document.createElement("span");
+            b.className = "badge " + (isPending(r) ? "pending" : "done");
+            b.textContent = isPending(r) ? "待確認" : "已確認";
+            td.append(b);
+          } else {
+            td.textContent = val;
+            if (h === "需求說明" || h === "確認方式") td.className = "notes";
+            else if (/時間|日期|時段|電話/.test(h)) td.className = "nowrap";
+          }
           row.append(td);
         });
         return row;
-      }) : [(function () {
+      });
+      if (!out.length) {
         var row = document.createElement("tr"), td = document.createElement("td");
-        td.colSpan = t.headers.length || 1; td.className = "empty"; td.textContent = "沒有符合的紀錄";
-        row.append(td); return row;
-      })()]);
+        td.colSpan = cols.length + (isC ? 1 : 0); td.className = "empty"; td.textContent = "沒有符合的紀錄";
+        row.append(td); out = [row];
+      }
+      $("tbody").replaceChildren.apply($("tbody"), out);
       $("countMsg").textContent = "顯示 " + rows.length + " / 共 " + t.rows.length + " 筆";
     }
 
+    /* ---------- 確認並寄送 ---------- */
+    function fillTemplate(text, r, lang) {
+      var map = { name: "姓名", company: "公司", date: "希望日期", time: "希望時段", service: "想了解的產品" };
+      return String(text || "").replace(/\{(\w+)\}/g, function (m, k) {
+        if (!map[k] || col(map[k]) < 0) return m;
+        var v = r[col(map[k])];
+        // 表單存的是產品中文名稱；英文信改用產品清單裡的英文名稱
+        if (k === "service" && lang === "en") {
+          var p = productNames.filter(function (n) { return n.zh === v; })[0];
+          if (p && p.en) v = p.en;
+        }
+        return v;
+      });
+    }
+
+    function useTemplate(lang) {
+      var b = settings.booking || {}, pick = function (o) { return o && typeof o === "object" ? (o[lang] || o.zh || "") : (o || ""); };
+      $("mSubject").value = fillTemplate(pick(b.confirmSubject) || (lang === "en" ? "Booking confirmed: {date} {time}" : "預約確認通知：{date} {time}"), current, lang);
+      $("mBody").value = fillTemplate(pick(b.confirmBody) || (lang === "en"
+        ? "Dear {name},\n\nYour appointment on {date} {time} is confirmed.\n"
+        : "{name} 您好：\n\n您預約的 {date} {time} 已確認。\n"), current, lang);
+      document.querySelectorAll("#dlgLang [data-lang]").forEach(function (x) { x.setAttribute("aria-pressed", String(x.dataset.lang === lang)); });
+    }
+
+    function openDialog(r) {
+      current = r;
+      var s = $("dlgSummary"), items = ["姓名", "公司", "電話", "電子郵件", "想了解的產品", "希望日期", "希望時段", "需求說明", "確認方式"];
+      s.replaceChildren();
+      items.forEach(function (h) {
+        var i = col(h);
+        if (i < 0 || !r[i]) return;
+        var dt = document.createElement("dt"), dd = document.createElement("dd");
+        dt.textContent = h; dd.textContent = r[i];
+        s.append(dt, dd);
+      });
+      $("mTo").value = r[col("電子郵件")] || "";
+      // 姓名與需求都沒有中文字時，預設用英文範本
+      var text = (r[col("姓名")] || "") + (r[col("需求說明")] || "") + (r[col("公司")] || "");
+      useTemplate(/[一-鿿]/.test(text) || !text ? "zh" : "en");
+      $("dlgMsg").textContent = ""; $("dlgMsg").className = "form-msg";
+      setDlgBusy(false);
+      $("dlg").showModal();
+    }
+
+    function setDlgBusy(b) { ["dlgSend", "dlgMark", "dlgCancel"].forEach(function (id) { $(id).disabled = b; }); }
+
+    function submitConfirm(send) {
+      var msg = $("dlgMsg");
+      if (send) {
+        var bad = ["mTo", "mSubject", "mBody"].filter(function (id) { return !$(id).checkValidity() || !$(id).value.trim(); });
+        if (bad.length) { msg.textContent = "請確認收件人、主旨與內容都已填寫正確。"; msg.className = "form-msg err"; $(bad[0]).focus(); return; }
+      } else if (!confirm("只把這筆標記為「已確認」，不寄信給客戶？")) {
+        return;
+      }
+      setDlgBusy(true);
+      msg.textContent = send ? "寄送中…" : "更新中…"; msg.className = "form-msg";
+      api({
+        action: "confirm", id: current[col("編號")], send: send,
+        to: $("mTo").value.trim(), subject: $("mSubject").value.trim(), body: $("mBody").value
+      }).then(function () {
+        $("dlg").close();
+        return load();
+      }).catch(function (err) {
+        msg.textContent = err.message === "Failed to fetch" ? "無法連線到後端服務，請稍後再試。" : err.message;
+        msg.className = "form-msg err";
+        setDlgBusy(false);
+      });
+    }
+
+    $("dlgSend").addEventListener("click", function () { submitConfirm(true); });
+    $("dlgMark").addEventListener("click", function () { submitConfirm(false); });
+    $("dlgCancel").addEventListener("click", function () { $("dlg").close(); });
+    document.querySelectorAll("#dlgLang [data-lang]").forEach(function (b) {
+      b.addEventListener("click", function () { useTemplate(b.dataset.lang); });
+    });
+
+    /* ---------- 匯出 Excel ---------- */
     function exportExcel() {
       if (!window.XLSX) { alert("Excel 元件載入失敗，請檢查網路後重新整理頁面。"); return; }
       var wb = XLSX.utils.book_new();
       [["contacts", "聯絡紀錄"], ["visits", "瀏覽人次"]].forEach(function (x) {
-        var keep = tab; tab = x[0];
-        var rows = filtered().slice().reverse(); // 匯出時依時間由舊到新
-        tab = keep;
-        var ws = XLSX.utils.aoa_to_sheet([data[x[0]].headers].concat(rows));
-        ws["!cols"] = data[x[0]].headers.map(function (h, i) {
+        var cols = visibleCols(x[0]);
+        var pickCols = function (r) { return cols.map(function (i) { return r[i] == null ? "" : r[i]; }); };
+        var rows = filtered(x[0]).slice().reverse().map(pickCols); // 匯出時依時間由舊到新
+        var head = pickCols(data[x[0]].headers);
+        var ws = XLSX.utils.aoa_to_sheet([head].concat(rows));
+        ws["!cols"] = head.map(function (h, i) {
           var w = Math.max(String(h).length * 2, 8);
           rows.forEach(function (r) { w = Math.max(w, Math.min(String(r[i] || "").length * 1.6, 60)); });
           return { wch: w };
@@ -184,6 +372,7 @@
       XLSX.writeFile(wb, "聯絡紀錄_" + today() + ".xlsx");
     }
 
+    /* ---------- 登入與介面 ---------- */
     $("loginForm").addEventListener("submit", function (e) {
       e.preventDefault();
       password = $("pw").value;
@@ -193,6 +382,10 @@
         try { sessionStorage.setItem("adminPw", password); } catch (err) {}
         $("loginBox").hidden = true;
         $("app").hidden = false;
+        // 每分鐘自動抓新資料（分頁在背景或正在填確認信時暫停）
+        setInterval(function () {
+          if (!busy && !document.hidden && !$("dlg").open) load().catch(function () {});
+        }, 60000);
       }).catch(function (err) {
         $("loginMsg").textContent = err.message === "Failed to fetch" ? "無法連線到後端服務" : err.message;
       }).finally(function () { $("loginBtn").disabled = false; });
@@ -204,7 +397,7 @@
     });
     $("refreshBtn").addEventListener("click", function () { load().catch(function (err) { alert(err.message); }); });
     $("exportBtn").addEventListener("click", exportExcel);
-    ["q", "from", "to"].forEach(function (id) { $(id).addEventListener("input", function () { if (data) render(); }); });
+    ["q", "from", "to", "status"].forEach(function (id) { $(id).addEventListener("input", function () { if (data) render(); }); });
     document.querySelectorAll("[data-tab]").forEach(function (b) {
       b.addEventListener("click", function () {
         tab = b.dataset.tab;
@@ -213,8 +406,9 @@
       });
     });
 
-    // 後端網址沿用 Pages CMS「基本設定 → 線上預約 → 後端服務網址」
+    // 後端網址與確認信範本沿用 Pages CMS「基本設定 → 線上預約」
     fetch("content/settings.json", { cache: "no-cache" }).then(function (r) { return r.json(); }).then(function (s) {
+      settings = s;
       var b = s.brand || {}, root = document.documentElement.style;
       if (b.color) root.setProperty("--brand", b.color);
       if (b.colorDark) root.setProperty("--brand-dark", b.colorDark);

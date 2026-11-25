@@ -79,6 +79,18 @@ content:
             label: "可預約時段"
             type: string
             list: true
+          - name: confirmSubject
+            label: "確認信主旨（後台按「確認並寄送」時使用）"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: string }
+              - { name: en, label: "English", type: string }
+          - name: confirmBody
+            label: "確認信內容（可用 {name} 姓名、{company} 公司、{date} 日期、{time} 時段、{service} 產品）"
+            type: object
+            fields:
+              - { name: zh, label: "中文", type: text }
+              - { name: en, label: "English", type: text }
 
   - name: hero
     label: "首頁主視覺"

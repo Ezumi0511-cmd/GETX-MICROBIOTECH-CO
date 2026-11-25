@@ -171,7 +171,7 @@ content:
           - { name: zh, label: "中文", type: string }
           - { name: en, label: "English", type: string }
       - name: facts
-        label: "公司資料"
+        label: "公司資料方塊（沒有項目時整個方塊隱藏）"
         type: object
         list:
           collapsible: true

@@ -40,30 +40,5 @@
     { "zh": "醫院", "en": "Hospitals" },
     { "zh": "礦業", "en": "Mining" }
   ],
-  "facts": [
-    {
-      "label": { "zh": "公司名稱", "en": "Company" },
-      "value": { "zh": "清泰源實業股份有限公司", "en": "GETX MICROBIOTECH CO., LTD." }
-    },
-    {
-      "label": { "zh": "統一編號", "en": "Tax ID" },
-      "value": { "zh": "84492346", "en": "84492346" }
-    },
-    {
-      "label": { "zh": "代表人", "en": "Representative" },
-      "value": { "zh": "溫紹功", "en": "Wen Shao-Kung" }
-    },
-    {
-      "label": { "zh": "資本總額", "en": "Capital" },
-      "value": { "zh": "新台幣 15,000,000 元", "en": "NT$15,000,000" }
-    },
-    {
-      "label": { "zh": "核准設立", "en": "Incorporated" },
-      "value": { "zh": "民國 82 年 12 月 6 日", "en": "6 December 1993" }
-    },
-    {
-      "label": { "zh": "登記機關", "en": "Registered with" },
-      "value": { "zh": "新北市政府", "en": "New Taipei City Government" }
-    }
-  ]
+  "facts": []
 }

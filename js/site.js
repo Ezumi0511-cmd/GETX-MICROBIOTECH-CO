@@ -78,11 +78,13 @@
 
     // 關於我們
     fill($("aboutText"), A(S.about.paragraphs).map(function (p) { return el("p", null, t(p)); }));
-    fill($("facts"), A(S.about.facts).map(function (f) {
+    var facts = A(S.about.facts);
+    fill($("facts"), facts.map(function (f) {
       var d = el("div");
       d.append(el("dt", null, t(f.label)), el("dd", null, t(f.value)));
       return d;
     }));
+    $("facts").hidden = facts.length === 0; // 後台清空「公司資料」時整個方塊隱藏
     var industries = A(S.about.industries);
     fill($("industryList"), industries.map(function (x) { return el("li", null, t(x)); }));
     $("industries").hidden = industries.length === 0;
